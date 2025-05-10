@@ -148,6 +148,19 @@
       transform: scale(1.05);
       box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
     }
+
+    .star {
+      font-size: 30px;
+      color: gray;
+      cursor: pointer;
+    }
+    .highlighted {
+      color: gold;
+    }
+    #message {
+      margin-top: 10px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -195,6 +208,19 @@
     </div>
   </section>
 
+<center>
+  <h2>Rate Us</h2>
+  <div id="stars">
+    <span class="star" data-value="1">&#9733;</span>
+    <span class="star" data-value="2">&#9733;</span>
+    <span class="star" data-value="3">&#9733;</span>
+    <span class="star" data-value="4">&#9733;</span>
+    <span class="star" data-value="5">&#9733;</span>
+  </div>
+
+  <kbd id="message">Select a rating</kbd>
+</center>
+
   <script>
     var boxes = document.getElementsByClassName('info-box');
 
@@ -210,6 +236,57 @@
     }
 
     window.onscroll = showBoxesOnScroll;
+
+    var stars = document.getElementsByClassName("star");
+    var message = document.getElementById("message");
+
+    for (var i = 0; i < stars.length; i++) {
+      stars[i].addEventListener("click", function() {
+        var rating = Number(this.getAttribute("data-value"));
+        highlightStars(rating);
+        showMessage(rating);
+      });
+    }
+
+    var stars = document.getElementsByClassName("star");
+    var message = document.getElementById("message");
+
+    for (var i = 0; i < stars.length; i++) {
+      stars[i].addEventListener("click", function() {
+        var rating = Number(this.getAttribute("data-value"));
+        highlightStars(rating);
+        showMessage(rating);
+      });
+    }
+
+    function highlightStars(rating) {
+      for (var j = 0; j < stars.length; j++) {
+        if ((j + 1) <= rating) {
+          stars[j].classList.add("highlighted");
+        } else {
+          stars[j].classList.remove("highlighted");
+        }
+      }
+    }
+
+    function showMessage(rating) {
+      let rounded = Math.round(rating);
+      var feedback = "";
+
+      if (rounded === 5) {
+        feedback = "Awesome! Thank you!";
+      } else if (rounded === 4) {
+        feedback = "Great! We appreciate it.";
+      } else if (rounded === 3) {
+        feedback = "Thanks! We'll try even harder.";
+      } else if (rounded === 2) {
+        feedback = "Oh no! We’ll work on improving.";
+      } else {
+        feedback = "Sorry! Tell us how we can do better.";
+      }
+
+      message.innerText = feedback;
+    }
   </script>
 
 </body>
